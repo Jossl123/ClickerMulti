@@ -14,9 +14,9 @@ function increment_gold(adder) {
     show_gold()
 }
 
-function clic() {
-    increment_gold(increment)
-}
+// function clic() {
+//     increment_gold(increment)
+// }
 
 setInterval(function() {
     ps = (totalgold - pgold)

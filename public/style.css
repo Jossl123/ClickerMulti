@@ -1,0 +1,22 @@
+html {
+    background-color: rgb(32, 32, 32);
+}
+
+#clicker {
+    background-color: rgb(104, 0, 0);
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    height: 20vw;
+    border-radius: 50%;
+    border: none;
+    transition: all 0.15s ease-in;
+}
+
+#clicker:active {
+    background-color: rgb(78, 0, 0);
+    transform: translate(-50%, -50%) scale(1.2);
+}

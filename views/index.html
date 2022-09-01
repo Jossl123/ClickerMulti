@@ -6,12 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clicker Multi</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-    <p><span id="ps">0</span>/s</p>
-    <button onclick="clic()">click</button>
-    <p id="gold">0</p>
+    <h1><span id="users_online">0</span> online</h1>
+    <button id="clicker" onclick="clic()"></button>
+    <br>
+    <h2 id="total"></h2>
+    <p id="clics"></p>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./socket.js"></script>
     <script src="./index.js"></script>
 </body>
 
