@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
     <title>Clicker Multi</title>
     <link rel="stylesheet" href="./style.css">
 </head>
@@ -12,9 +15,15 @@
 <body>
     <h1><span id="users_online">0</span> online</h1>
     <button id="clicker" onclick="clic()"></button>
-    <br>
     <h2 id="total"></h2>
     <p id="clics"></p>
+    <div id="right_side">
+        <div id="discuss"></div>
+        <div id="msg_div">
+            <input type="text" id="msg">
+            <button id="send_msg" onclick="send_msg()">s</button>
+        </div>
+    </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./socket.js"></script>
     <script src="./index.js"></script>

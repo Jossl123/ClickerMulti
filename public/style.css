@@ -1,9 +1,10 @@
 html {
     background-color: rgb(32, 32, 32);
+    font-family: 'Noto Sans', sans-serif;
 }
 
 #clicker {
-    background-color: rgb(104, 0, 0);
+    background-color: rgb(78, 0, 0);
     margin: 0;
     position: absolute;
     top: 50%;
@@ -16,7 +17,59 @@ html {
     transition: all 0.15s ease-in;
 }
 
+#total {
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -100%);
+}
+
+#clics {
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
 #clicker:active {
-    background-color: rgb(78, 0, 0);
-    transform: translate(-50%, -50%) scale(1.2);
+    background-color: rgb(104, 0, 0);
+    transform: translate(-50%, -50%) scale(0.8);
+}
+
+#right_side {
+    margin: 0;
+    top: 0%;
+    position: absolute;
+    right: 0%;
+    width: 20%;
+    height: 100%;
+    background-color: brown;
+}
+
+#msg_div {
+    background-color: aqua;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    width: -webkit-fill-available;
+    height: auto;
+}
+
+#discuss {
+    display: flex;
+    flex-direction: column;
+}
+
+#msg {
+    width: -webkit-fill-available;
+}
+
+#send_msg {
+    width: min-content;
+    position: absolute;
+    right: 0;
+}
+
+.div_msg_discuss {
+    margin: 0;
 }

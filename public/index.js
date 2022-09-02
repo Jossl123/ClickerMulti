@@ -18,8 +18,8 @@ function increment_gold(adder) {
 //     increment_gold(increment)
 // }
 
-setInterval(function() {
-    ps = (totalgold - pgold)
-    document.getElementById("ps").innerText = ps
-    pgold = totalgold
-}, 1000);
+// setInterval(function() {
+//     ps = (totalgold - pgold)
+//     document.getElementById("ps").innerText = ps
+//     pgold = totalgold
+// }, 1000);
