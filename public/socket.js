@@ -17,7 +17,7 @@ soc.on("users_online", (nb) => {
 soc.on("receive_msg", (data) => {
     var sender = data.sender
     var msg = data.msg
-    document.getElementById("discuss").innerHTML += `<div class="div_msg_discuss"><span><p style="color:${data.color}">${sender}</p> - ${msg}</span></div>`
+    document.getElementById("discuss").innerHTML += `<div class="div_msg_discuss"><spanstyle="color:${data.color}">${sender}- ${msg}</span></div>`
 })
 
 function send_msg() {
@@ -29,3 +29,11 @@ function send_msg() {
 function clic() {
     soc.emit("clic", 0)
 }
+
+document.getElementById("html").addEventListener('keydown', (e) => {
+    if (e.key == "Enter") {
+        send_msg()
+    } else {
+        document.getElementById("msg").focus()
+    }
+});
