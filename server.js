@@ -22,18 +22,20 @@ io.on('connection', (client) => {
     io.emit("users_online", io.engine.clientsCount)
     client.clic = 0;
     client.userName = generate_random_username()
-    client.clickIncr = 1
-    client.clickIncrPrice = 100
+    client.clicIncr = 1
+    client.clicIncrPrice = 100
     client.color = generate_random_color()
     client.on('clic', () => {
-        total += 1
-        client.clic += client.clientIncr
+        total += client.clicIncr
+        client.clic += client.clicIncr
         client.broadcast.emit('total', total);
-        client.emit("clic", { total: total, clic_nb: client.clic })
+        client.emit("clic", { total: total, clic_nb: parseInt(client.clic) })
     });
     client.on('upgradeClick', (msg) => {
-        client.clickIncr *= 1.4
-        client.clickIncrPrice *= 1.5
+        if (client.clic) {
+            client.clicIncr *= 1.4
+            client.clicIncrPrice *= 1.5
+        }
     });
     client.on('send_msg', (msg) => {
         io.emit("receive_msg", { sender: client.userName, msg: msg, color: client.color })
