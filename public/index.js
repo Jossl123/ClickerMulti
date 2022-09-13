@@ -1,25 +1,11 @@
-var gold = 0
-var totalgold = gold
-var pgold = gold // pgold is the gold from the second before
-var increment = 1
-var ps = 0
-
-function show_gold() {
-    document.getElementById("gold").innerText = gold
+function show_clics() {
+    document.getElementById("clics").innerText = clics
 }
 
-function increment_gold(adder) {
-    gold += adder
-    totalgold += adder
-    show_gold()
+function tooglePanel(name) {
+    if (document.getElementById(name).style.visibility != "visible") {
+        document.getElementById(name).style.visibility = "visible"
+    } else {
+        document.getElementById(name).style.visibility = "hidden"
+    }
 }
-
-// function clic() {
-//     increment_gold(increment)
-// }
-
-// setInterval(function() {
-//     ps = (totalgold - pgold)
-//     document.getElementById("ps").innerText = ps
-//     pgold = totalgold
-// }, 1000);

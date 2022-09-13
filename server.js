@@ -23,18 +23,29 @@ io.on('connection', (client) => {
     client.clic = 0;
     client.userName = generate_random_username()
     client.clicIncr = 1
-    client.clicIncrPrice = 100
+    client.clicIncrCost = 100
+    client.pastTime = Date.now()
     client.color = generate_random_color()
     client.on('clic', () => {
-        total += client.clicIncr
-        client.clic += client.clicIncr
-        client.broadcast.emit('total', total);
-        client.emit("clic", { total: total, clic_nb: parseInt(client.clic) })
+        var d = Date.now()
+        if (d - client.pastTime < 30) { //check the time between the last click
+            console.log("are you cheeting ?")
+        } else {
+            client.pastTime = d
+            total += client.clicIncr
+            client.clic += client.clicIncr
+            client.broadcast.emit('total', total);
+            client.emit("clic", { total: parseInt(total), clic_nb: parseInt(client.clic) })
+        }
     });
     client.on('upgradeClick', (msg) => {
-        if (client.clic) {
-            client.clicIncr *= 1.4
-            client.clicIncrPrice *= 1.5
+        if (client.clic >= client.clicIncrCost) {
+            client.clic -= client.clicIncrCost
+            total -= client.clicIncrCost
+            client.clicIncr *= 1.3
+            client.clicIncrCost *= 1.5
+            client.broadcast.emit('total', total);
+            client.emit("upgrade", { total: parseInt(total), clic_nb: parseInt(client.clic), name: "clicIncr", cost: Math.ceil(client.clicIncrCost), incr: (Math.floor(client.clicIncr * 10) / 10).toFixed(1) })
         }
     });
     client.on('send_msg', (msg) => {
@@ -51,8 +62,8 @@ server.listen(3000, () => {
 });
 
 function generate_random_username() {
-    var a = ["Small", "Blue", "Ugly", "Great", "Big", "Giga", "Yellow"];
-    var b = ["Bear", "Dog", "Banana", "Peperoni", "Elefant", "Cat", "Hat", "Ranger"];
+    var a = ["Small", "Blue", "Ugly", "Great", "Big", "Giga", "Yellow", "Gross", "Shiny"];
+    var b = ["Bear", "Dog", "Banana", "Peperoni", "Elefant", "Cat", "Hat", "Ranger", "Saxophone"];
 
     var rA = Math.floor(Math.random() * a.length);
     var rB = Math.floor(Math.random() * b.length);
