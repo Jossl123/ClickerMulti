@@ -6,6 +6,7 @@ soc.on("total", (tot) => {
     document.getElementById("total").innerText = total
 })
 soc.on("clic", (data) => {
+    console.log("tset")
     clics = data.clic_nb
     document.getElementById("clics").innerText = clics
     total = data.total
@@ -28,6 +29,10 @@ function send_msg() {
 
 function clic() {
     soc.emit("clic", 0)
+}
+
+function upgradeClick() {
+    soc.emit("upgradeClick", 0)
 }
 
 document.getElementById("html").addEventListener('keydown', (e) => {
