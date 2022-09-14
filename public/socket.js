@@ -1,6 +1,7 @@
 var soc = io()
 var total = 0
 var clics = 0
+var clics_spendable = 0
 soc.on("total", (tot) => {
     total = tot
     document.getElementById("total").innerText = total
@@ -8,6 +9,8 @@ soc.on("total", (tot) => {
 soc.on("clic", (data) => {
     clics = data.clic_nb
     document.getElementById("clics").innerText = clics
+    clics_spendable = data.spendable_clic
+    document.getElementById("clics_spendable").innerText = clics_spendable
     total = data.total
     document.getElementById("total").innerText = total
 })
@@ -23,6 +26,8 @@ soc.on("receive_msg", (data) => {
 soc.on("upgrade", (data) => {
     var name = data.name
     clics = data.clic_nb
+    clics_spendable = data.spendable_clic
+    document.getElementById("clics_spendable").innerText = clics_spendable
     show_clics()
     document.getElementById("clicker").innerText = "x" + data.incr
     document.getElementById(name + "_cost").innerText = data.cost

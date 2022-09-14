@@ -15,12 +15,13 @@ app.use(express.static(__dirname + '/public/'));
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/views/index.html');
 });
-
-var total = 5000
+var total = 0
 
 io.on('connection', (client) => {
     io.emit("users_online", io.engine.clientsCount)
     client.clic = 0;
+    client.taxes = 0.25;
+    client.clicSpendable = 0;
     client.userName = generate_random_username()
     client.clicIncr = 1
     client.clicIncrCost = 100
@@ -34,18 +35,19 @@ io.on('connection', (client) => {
             client.pastTime = d
             total += client.clicIncr
             client.clic += client.clicIncr
-            client.broadcast.emit('total', total);
-            client.emit("clic", { total: parseInt(total), clic_nb: parseInt(client.clic) })
+            client.clicSpendable += client.clicIncr - (client.clicIncr * client.taxes)
+            client.broadcast.emit('total', parseInt(total));
+            client.emit("clic", { total: parseInt(total), clic_nb: parseInt(client.clic), spendable_clic: parseInt(client.clicSpendable) })
         }
     });
     client.on('upgradeClick', (msg) => {
-        if (client.clic >= client.clicIncrCost) {
-            client.clic -= client.clicIncrCost
+        if (client.clicSpendable >= client.clicIncrCost) {
+            client.clicSpendable -= client.clicIncrCost
             total -= client.clicIncrCost
             client.clicIncr *= 1.3
-            client.clicIncrCost *= 1.5
+            client.clicIncrCost *= 1.7
             client.broadcast.emit('total', total);
-            client.emit("upgrade", { total: parseInt(total), clic_nb: parseInt(client.clic), name: "clicIncr", cost: Math.ceil(client.clicIncrCost), incr: (Math.floor(client.clicIncr * 10) / 10).toFixed(1) })
+            client.emit("upgrade", { total: parseInt(total), clic_nb: parseInt(client.clic), name: "clicIncr", cost: Math.ceil(client.clicIncrCost), incr: (Math.floor(client.clicIncr * 10) / 10).toFixed(1), spendable_clic: parseInt(client.clicSpendable) })
         }
     });
     client.on('send_msg', (msg) => {
