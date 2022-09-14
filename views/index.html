@@ -12,11 +12,14 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 
-<body>
+<body ondrop="drop(event)" ondragover="allowDrop(event)">
     <div id="div_open_panel">
         <button class="open_panel" onclick="tooglePanel('upgrades')">Up</button>
         <button class="open_panel" onclick="tooglePanel('right_side')">Msg</button>
-        <div class="panel" id="upgrades">
+    </div>
+    <div class="window" draggable="true" ondragstart="drag(event)" id="upgrades">
+        <div class="window_name">Upgrade</div>
+        <div class="window_content">
             <button id="upgradeClick" onclick="upgradeClick()">Upgrade</button>
             <p><span id="clicIncr_cost">100</span>c</p>
         </div>
@@ -28,7 +31,7 @@
         <p id="clics">0</p>
         <button id="clicker" onclick="clic()">x1</button>
     </div>
-    <div class="panel" id="right_side">
+    <div class="window" id="right_side">
         <div id="discuss"></div>
         <div id="msg_div">
             <input type="text" id="msg">
