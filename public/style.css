@@ -1,9 +1,14 @@
 html {
     background-color: rgb(32, 32, 32);
     color: white;
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Noto Sans', sans-serif;  
+    height: -webkit-fill-available;
+    overflow: hidden;
 }
-
+body{
+    height: -webkit-fill-available; 
+    margin: 0;
+}
 button {
     outline: none;
     border: none;
@@ -11,7 +16,6 @@ button {
     background-color: gray;
     z-index: 9;
 }
-
 
 /* msg */
 
@@ -61,6 +65,8 @@ button {
     width: fit-content;
     visibility: hidden;
     z-index: 10;
+    border: solid rgb(133, 133, 133);
+    background-color: rgb(55, 55, 55);
 }
 
 .window>.window_name {
@@ -120,6 +126,4 @@ button {
 
 #upgrades {
     top: 4rem;
-    background-color: rgb(55, 55, 55);
-    border: solid rgb(133, 133, 133);
 }
