@@ -35,7 +35,8 @@ soc.on("upgrade", (data) => {
 
 soc.on("newClassement", (data) => {
     for (let i = 0; i < data.length; i++) {
-        document.getElementById("p" + (i + 1)).innerText = data[i][1]
+        document.getElementById("p" + (i + 1) + "_name").innerText = data[i][1]
+        document.getElementById("p" + (i + 1) + "_clic").innerText = data[i][0]
     }
 })
 

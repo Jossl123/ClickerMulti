@@ -45,33 +45,41 @@ io.on('connection', (client) => {
     client.on('clic_trap', () => {
         var d = Date.now()
         if (d - client.pastTime < 30) { //check the time between the last click
-            console.log("are you cheeting ?")
+            console.log("are you cheating ?")
             client.emit("youCheat")
         } else {
-            for (let i = bestPlayers.length - 1; i >= 0; i--) {
+            client.pastTime = d
+            total += client.clicIncr
+            client.clic += client.clicIncr
+            client.clicSpendable += client.clicIncr - (client.clicIncr * client.taxes)
+            var index = bestPlayers.length - 1
+            if (bestPlayersId.includes(client.id)) {
+                index = bestPlayersId.indexOf(client.id) - 1
+                bestPlayers[index + 1][0] = parseInt(client.clicSpendable)
+                nClassement = true
+            }
+            for (let i = index; i >= 0; i--) {
+                if (bestPlayersId[i] == client.id) continue;
                 if (bestPlayers[i][0] > client.clicSpendable) break;
-                if (bestPlayersId[i] == client.id) break
-                var nClassement = true
-                var rem = [...bestPlayers[i]]
-                var remId = bestPlayersId[i]
-                if (i < bestPlayers.length - 1) {
-                    bestPlayers[i] = [...bestPlayers[i + 1]]
-                    bestPlayers[i + 1] = [...rem]
-                    bestPlayersId[i] = bestPlayersId[i + 1]
-                    bestPlayersId[i + 1] = remId
-                } else {
-                    bestPlayers[i] = [client.clicSpendable, client.userName]
-                    bestPlayersId[i] = client.id
+                else {
+                    var nClassement = true
+                    var rem = [...bestPlayers[i]]
+                    var remId = bestPlayersId[i]
+                    if (i < bestPlayers.length - 1) {
+                        bestPlayers[i] = [...bestPlayers[i + 1]]
+                        bestPlayers[i + 1] = [...rem]
+                        bestPlayersId[i] = bestPlayersId[i + 1]
+                        bestPlayersId[i + 1] = remId
+                    } else {
+                        bestPlayers[i] = [parseInt(client.clicSpendable), client.userName]
+                        bestPlayersId[i] = client.id
+                    }
                 }
             }
             if (nClassement) {
                 nClassement = false
                 io.emit("newClassement", bestPlayers)
             }
-            client.pastTime = d
-            total += client.clicIncr
-            client.clic += client.clicIncr
-            client.clicSpendable += client.clicIncr - (client.clicIncr * client.taxes)
             client.broadcast.emit('total', parseInt(total));
             client.emit("clic_trap", { total: parseInt(total), clic_nb: parseInt(client.clic), spendable_clic: parseInt(client.clicSpendable) })
         }
