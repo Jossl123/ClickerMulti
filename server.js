@@ -16,10 +16,25 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/views/index.html');
 });
 var total = 0
-
+var bestPlayersId = [
+    "",
+    "",
+    "",
+    "",
+    ""
+]
+var bestPlayers = [
+    [0, ""],
+    [0, ""],
+    [0, ""],
+    [0, ""],
+    [0, ""]
+]
+var nClassement = false
 io.on('connection', (client) => {
     io.emit("users_online", io.engine.clientsCount)
     client.clic = 0;
+    console.log(client)
     client.taxes = 0.25;
     client.clicSpendable = 0;
     client.userName = generate_random_username()
@@ -27,17 +42,38 @@ io.on('connection', (client) => {
     client.clicIncrCost = 100
     client.pastTime = Date.now()
     client.color = generate_random_color()
-    client.on('clic', () => {
+    client.on('clic_trap', () => {
         var d = Date.now()
         if (d - client.pastTime < 30) { //check the time between the last click
             console.log("are you cheeting ?")
+            client.emit("youCheat")
         } else {
+            for (let i = bestPlayers.length - 1; i >= 0; i--) {
+                if (bestPlayers[i][0] > client.clicSpendable) break;
+                if (bestPlayersId[i] == client.id) break
+                var nClassement = true
+                var rem = [...bestPlayers[i]]
+                var remId = bestPlayersId[i]
+                if (i < bestPlayers.length - 1) {
+                    bestPlayers[i] = [...bestPlayers[i + 1]]
+                    bestPlayers[i + 1] = [...rem]
+                    bestPlayersId[i] = bestPlayersId[i + 1]
+                    bestPlayersId[i + 1] = remId
+                } else {
+                    bestPlayers[i] = [client.clicSpendable, client.userName]
+                    bestPlayersId[i] = client.id
+                }
+            }
+            if (nClassement) {
+                nClassement = false
+                io.emit("newClassement", bestPlayers)
+            }
             client.pastTime = d
             total += client.clicIncr
             client.clic += client.clicIncr
             client.clicSpendable += client.clicIncr - (client.clicIncr * client.taxes)
             client.broadcast.emit('total', parseInt(total));
-            client.emit("clic", { total: parseInt(total), clic_nb: parseInt(client.clic), spendable_clic: parseInt(client.clicSpendable) })
+            client.emit("clic_trap", { total: parseInt(total), clic_nb: parseInt(client.clic), spendable_clic: parseInt(client.clicSpendable) })
         }
     });
     client.on('upgradeClick', (msg) => {
@@ -51,9 +87,8 @@ io.on('connection', (client) => {
         }
     });
     client.on('send_msg', (msg) => {
-        io.emit("receive_msg", { sender: client.userName, msg: msg, color: client.color })
+        if ((msg.trim()).length != 0) io.emit("receive_msg", { sender: client.userName, msg: msg, color: client.color })
     });
-
     client.on('disconnect', () => {
         io.emit("users_online", io.engine.clientsCount)
     });

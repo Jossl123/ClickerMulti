@@ -16,6 +16,7 @@
     <div id="div_open_panel">
         <button class="open_panel" onclick="tooglePanel('upgrades')">Up</button>
         <button class="open_panel" onclick="tooglePanel('right_side')">Msg</button>
+        <button class="open_panel" onclick="tooglePanel('classement')">Cla</button>
         <button class="open_panel" onclick="tooglePanel('trophies')">Tro</button>
     </div>
     <div class="window" draggable="true" ondrag="element_drag(event)" ondragstart="element_drag_ghost(event)" id="upgrades">
@@ -31,21 +32,33 @@
             <p>trophées</p>
         </div>
     </div>
+    <div class="window" draggable="true" ondrag="element_drag(event)" ondragstart="element_drag_ghost(event)" id="classement">
+        <div class="window_name">Classement</div>
+        <div class="window_content">
+            <p>1.<span id="p1"></span></p>
+            <p>2.<span id="p2"></span></p>
+            <p>3.<span id="p3"></span></p>
+            <p>4.<span id="p4"></span></p>
+            <p>5.<span id="p5"></span></p>
+        </div>
+    </div>
     <div id="div_clicker">
         <h1><span id="users_online">0</span> online</h1>
         <h2 id="total">clic</h2>
         <p id="clics_spendable">0</p>
         <p id="clics">0</p>
-        <button id="clicker" onclick="clic()">x1</button>
+        <button id="clicker" onclick="trap()">x1</button>
     </div>
-    <div class="window" draggable="true" id="right_side" ondrag="element_drag(event)" ondragstart="element_drag_ghost(event)" >
+    <div class="window" draggable="true" id="right_side" ondrag="element_drag(event)" ondragstart="element_drag_ghost(event)">
         <div class="window_name">Messages</div>
-        <div class="window_content"><div id="discuss"></div>
-        <div id="msg_div">
-            <input type="text" id="msg">
-            <button id="send_msg" onclick="send_msg()">s</button>
-        </div></div>
-        
+        <div class="window_content">
+            <div id="discuss"></div>
+            <div id="msg_div">
+                <input type="text" id="msg">
+                <button id="send_msg" onclick="send_msg()">s</button>
+            </div>
+        </div>
+
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./socket.js"></script>

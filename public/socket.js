@@ -6,7 +6,7 @@ soc.on("total", (tot) => {
     total = tot
     document.getElementById("total").innerText = total
 })
-soc.on("clic", (data) => {
+soc.on("clic_trap", (data) => {
     clics = data.clic_nb
     document.getElementById("clics").innerText = clics
     clics_spendable = data.spendable_clic
@@ -33,6 +33,16 @@ soc.on("upgrade", (data) => {
     document.getElementById(name + "_cost").innerText = data.cost
 })
 
+soc.on("newClassement", (data) => {
+    for (let i = 0; i < data.length; i++) {
+        document.getElementById("p" + (i + 1)).innerText = data[i][1]
+    }
+})
+
+soc.on("youCheat", (data) => {
+    alert("Are you trying to cheat ?")
+})
+
 function send_msg() {
     var msg = document.getElementById("msg").value
     if (msg == "") return
@@ -40,12 +50,12 @@ function send_msg() {
     soc.emit("send_msg", msg)
 }
 
-function clic() {
-    soc.emit("clic", 0)
+function trap() {
+    soc.emit("clic_trap")
 }
 
 function upgradeClick() {
-    soc.emit("upgradeClick", 0)
+    soc.emit("upgradeClick")
 }
 
 document.getElementById("html").addEventListener('keydown', (e) => {
