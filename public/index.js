@@ -1,5 +1,6 @@
 function show_clics() {
     document.getElementById("clics").innerText = clics
+    document.getElementById("clics_spendable").innerText = clics_spendable
 }
 
 function tooglePanel(name) {
@@ -27,7 +28,8 @@ function drop(ev) {
 }
 //////
 var element_dragged = ""
-var offset_dragged = {x: 30, y: 10}
+var offset_dragged = { x: 30, y: 10 }
+
 function element_drag(ev) {
     element_dragged = ev.target.id
     drop(ev)
@@ -37,11 +39,13 @@ function drag_over(event) {
     event.preventDefault()
     return false
 }
+
 function element_drag_ghost(ev) {
     var boundingRec = document.getElementById(ev.target.id).getBoundingClientRect()
-    offset_dragged = {x: ev.clientX - boundingRec.left, y: ev.clientY - boundingRec.top}
+    offset_dragged = { x: ev.clientX - boundingRec.left, y: ev.clientY - boundingRec.top }
     ev.dataTransfer.setDragImage(document.createElement('img'), 0, 0)
 }
+
 function drop(ev) {
     var dm = document.getElementById(element_dragged)
     if (ev.clientX > 0 || ev.clientY > 0) {

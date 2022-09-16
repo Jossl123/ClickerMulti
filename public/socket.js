@@ -27,7 +27,6 @@ soc.on("upgrade", (data) => {
     var name = data.name
     clics = data.clic_nb
     clics_spendable = data.spendable_clic
-    document.getElementById("clics_spendable").innerText = clics_spendable
     show_clics()
     document.getElementById("clicker").innerText = "x" + data.incr
     document.getElementById(name + "_cost").innerText = data.cost
@@ -55,9 +54,10 @@ function trap() {
     soc.emit("clic_trap")
 }
 
-function upgradeClick() {
-    soc.emit("upgradeClick")
+function upgrade(msg) {
+    soc.emit(msg)
 }
+
 
 document.getElementById("html").addEventListener('keydown', (e) => {
     if (e.key == "Enter") {
