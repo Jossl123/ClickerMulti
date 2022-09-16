@@ -39,6 +39,10 @@ soc.on("newClassement", (data) => {
     }
 })
 
+soc.on("youAreBan", (data) => {
+    alert("t'es ban <3")
+})
+
 soc.on("youCheat", (data) => {
     alert("Are you trying to cheat ?")
 })

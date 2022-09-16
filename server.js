@@ -44,14 +44,17 @@ io.on('connection', (client) => {
     client.clicIncr = 1
     client.clicIncrCost = 100
     client.pastTime = Date.now()
+    client.cheatNb = 0
     client.color = generate_random_color()
     client.on('clic_trap', () => {
         var d = Date.now()
         if (d - client.pastTime < 30) { //check the time between the last click
             console.log("are you cheating ?")
             client.emit("youCheat")
+            client.cheatNb += 1
             if (client.cheatNb >= 100) {
-                client._onDisconnect();
+                client.emit("youAreBan")
+                client.disconnect();
             }
         } else {
             client.pastTime = d
